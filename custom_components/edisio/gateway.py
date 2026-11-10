@@ -640,6 +640,26 @@ class EdisioGateway:
             return
         await self.async_send(protocol.cmd_learn(edisio_id, mid))
 
+    async def async_learn_cover_output(self, edisio_id: str, group: int,
+                                       output: str) -> None:
+        """RFPlayer : fait apprendre a une sortie de volet sa trame de pilotage.
+
+        En mode volet, un recepteur Edisio s'appaire sortie par sortie : chaque
+        sortie memorise la commande recue pendant sa programmation. On emet donc
+        la commande meme que l'entite enverra ensuite (cf. rfplayer.py). Sans
+        effet avec le dongle Edisio transparent, dont l'appairage est inchange.
+        """
+        if self.dongle != DONGLE_RFPLAYER:
+            return
+        command = rfplayer.build_cover_learn_command(output, edisio_id, group)
+        if command is None:
+            _LOGGER.warning("Appairage volet %s (%s) non traduisible en commande "
+                            "RFPlayer", edisio_id, output)
+            return
+        _LOGGER.info("RFPlayer : appairage volet %s, sortie %s", edisio_id, output)
+        async with self._write_lock:
+            self._write_line(command)
+
     async def async_send(self, frames: list[str]) -> None:
         """Emission : trames Edisio brutes (dongle transparent) ou lignes ZIA (RFPlayer).
 

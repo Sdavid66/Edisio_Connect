@@ -118,6 +118,29 @@ def build_assoc_command(edisio_id: str, group: int = 1) -> str | None:
     return f"ASSOC EDISIO ID {dev_dec} QUALIFIER {int(group)}"
 
 
+# Sorties d'un volet, a appairer separement -> action de pilotage a lui apprendre.
+COVER_LEARN_OUTPUTS = {"up": "open", "down": "close"}
+
+
+def build_cover_learn_command(output: str, edisio_id: str,
+                              group: int) -> str | None:
+    """Commande a faire apprendre a UNE sortie d'un volet (sans « ZIA++ »).
+
+    En mode volet, un recepteur Edisio (EMV-400...) s'appaire sortie par sortie
+    (notice Edisio / doc Jeedom « EMV-400 Volet ») : sortie 1 = montee, sortie 2
+    = descente, et chaque sortie memorise la trame de pilotage qu'elle recoit
+    pendant qu'elle est en programmation. Un « ASSOC » ne convient pas : c'est
+    la meme trame pour les deux sorties, et ce n'est pas celle du pilotage.
+    On renvoie donc EXACTEMENT la commande que l'entite emettra ensuite (meme
+    verbe, meme QUALIFIER) : construite par ``build_command`` pour ne jamais
+    pouvoir diverger du pilotage.
+    """
+    action = COVER_LEARN_OUTPUTS.get(output)
+    if action is None:
+        return None
+    return build_command(action, edisio_id, group)
+
+
 def _battery_pct(infos: dict) -> int | None:
     """Extrait un pourcentage batterie depuis infoMeaning (« …, 3.5V »)."""
     meaning = str(infos.get("infoMeaning", ""))

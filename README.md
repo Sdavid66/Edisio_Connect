@@ -118,6 +118,17 @@ n'ouvre aucune fenêtre et ne change aucun état dans HA.
 > `ZIA++ASSOC … EDISIO` (support en version de test). La procédure côté module reste
 > identique.
 
+> 🪟 **Volet avec RFPlayer (EMV-400 en mode volet…).** Un volet s'appaire **sortie par
+> sortie**, avec les deux boutons **« Appairer montée »** et **« Appairer descente »**
+> présents sur l'appareil en mode RFPlayer (le bouton « Appairer » ne convient pas) :
+> 1. **1 appui sur « R »** du module (bip court répété) → clique **« Appairer
+>    montée »** → bip continu → **appui sur « R »** pour valider ;
+> 2. **2 appuis sur « R »** (double bip répété) → clique **« Appairer descente »** →
+>    bip continu → **appui sur « R »** pour valider.
+>
+> Le module doit être en **mode volet** (interrupteur DIP, voir sa notice). L'arrêt ne
+> s'appaire pas.
+
 > ⚠️ **À ne pas confondre avec le mode inclusion.** L'**inclusion** = HA *écoute* (RX)
 > pour **découvrir des émetteurs** (télécommandes, sondes). Le bouton **« Appairer »** =
 > HA *émet* (TX) pour qu'un **récepteur** mémorise HA. Règle simple : **émetteur →

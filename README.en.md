@@ -112,6 +112,18 @@ changes no state in HA.
 > frame above; with **RFPlayer** it sends the equivalent association command
 > `ZIA++ASSOC … EDISIO` (beta). The procedure on the module side is the same.
 
+> 🪟 **Shutter with RFPlayer (EMV-400 in shutter mode…).** A shutter is paired **one
+> output at a time**, with the two buttons **"Appairer montée"** (pair up) and
+> **"Appairer descente"** (pair down) shown on the device in RFPlayer mode (the
+> "Appairer" button is not suitable):
+> 1. **Press "R" once** on the module (short repeating beep) → click **"Appairer
+>    montée"** → continuous beep → **press "R"** to confirm;
+> 2. **Press "R" twice** (repeating double beep) → click **"Appairer descente"** →
+>    continuous beep → **press "R"** to confirm.
+>
+> The module must be in **shutter mode** (DIP switch, see its manual). Stop does not
+> need pairing.
+
 > ⚠️ **Not to be confused with inclusion mode.** **Inclusion** = HA *listens* (RX) to
 > **discover emitters** (remotes, sensors). The **"Appairer"** button = HA *transmits*
 > (TX) so a **receiver** memorises HA. Rule of thumb: **emitter → inclusion, receiver →

@@ -6,7 +6,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import DOMAIN
+from .const import DOMAIN, DONGLE_RFPLAYER
 from .entity import EdisioReceiver
 
 
@@ -27,6 +27,13 @@ class EdisioCover(EdisioReceiver, CoverEntity):
     def __init__(self, gw, dev):
         super().__init__(gw, dev)
         self._attr_is_closed = None  # pas de retour d'etat
+
+    @property
+    def assumed_state(self) -> bool:
+        # RFPlayer : etat suppose (aucun retour) -> les deux fleches restent
+        # toujours cliquables, y compris pour renvoyer le sens en cours (arret
+        # « au 2e appui » des volets Edisio). Dongle Edisio transparent : inchange.
+        return self._gateway.dongle == DONGLE_RFPLAYER
 
     async def async_open_cover(self, **kwargs):
         # Volet piloté par commandes directionnelles (montée 09 / descente 1B /
