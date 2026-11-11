@@ -177,5 +177,22 @@
         "no_hub": "Edisio gateway not found."
       }
     }
+  },
+  "exceptions": {
+    "no_gateway": {
+      "message": "No Edisio gateway is configured or loaded."
+    },
+    "not_connected": {
+      "message": "The Edisio gateway is not connected ({port}): check the USB dongle."
+    },
+    "invalid_frame": {
+      "message": "Invalid frame: {frame}"
+    },
+    "import_unreadable": {
+      "message": "Unable to read the import file {path}: {error}"
+    },
+    "import_invalid": {
+      "message": "Invalid import file: {error}"
+    }
   }
 }

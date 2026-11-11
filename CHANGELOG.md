@@ -1,5 +1,8 @@
 # Changelog
 
+> Les versions postérieures à la 1.11.1 sont décrites dans les
+> [releases GitHub](https://github.com/Sdavid66/Edisio_Connect/releases).
+
 ## 1.11.1
 - **EDR-B4 : volets par paire de voies.** Correction du modèle EDR-B4 : en mode
   volet, les voies vont **par paire** (**1 & 2** et **3 & 4**), et **un volet =

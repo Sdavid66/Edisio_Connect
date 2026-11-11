@@ -177,5 +177,22 @@
         "no_hub": "Passerelle Edisio introuvable."
       }
     }
+  },
+  "exceptions": {
+    "no_gateway": {
+      "message": "Aucune passerelle Edisio n'est configurée ou chargée."
+    },
+    "not_connected": {
+      "message": "La passerelle Edisio n'est pas connectée ({port}) : vérifiez le dongle USB."
+    },
+    "invalid_frame": {
+      "message": "Trame invalide : {frame}"
+    },
+    "import_unreadable": {
+      "message": "Impossible de lire le fichier d'import {path} : {error}"
+    },
+    "import_invalid": {
+      "message": "Fichier d'import invalide : {error}"
+    }
   }
 }

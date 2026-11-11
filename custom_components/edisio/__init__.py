@@ -8,11 +8,12 @@ import voluptuous as vol
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall
+from homeassistant.exceptions import HomeAssistantError, ServiceValidationError
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import device_registry as dr
 from homeassistant.loader import async_get_integration
 
-from . import jeedom_import, models
+from . import jeedom_import, models, protocol
 from .device import gateway_id
 from .const import (
     CONF_DEV_ID, CONF_DEVICES, CONF_EDISIO_ID, CONF_KIND, CONF_PORT, DOMAIN,
@@ -143,7 +144,21 @@ def _register_services(hass: HomeAssistant) -> None:
         return
 
     def _gateways() -> list[EdisioGateway]:
-        return list(hass.data[DOMAIN].values())
+        gateways = list(hass.data.get(DOMAIN, {}).values())
+        if not gateways:
+            raise ServiceValidationError(
+                translation_domain=DOMAIN, translation_key="no_gateway")
+        return gateways
+
+    def _connected_gateway() -> EdisioGateway:
+        # Un ordre emis sur un port ferme serait perdu sans bruit : on le
+        # signale a l'appelant (automatisation, outils de developpement).
+        gateway = _gateways()[0]
+        if not gateway.connected:
+            raise HomeAssistantError(
+                translation_domain=DOMAIN, translation_key="not_connected",
+                translation_placeholders={"port": str(gateway.port)})
+        return gateway
 
     async def _handle_inclusion(call: ServiceCall) -> None:
         enabled = call.data.get("enable", True)
@@ -158,27 +173,51 @@ def _register_services(hass: HomeAssistant) -> None:
             await gw.async_forget(dev_id, ban)
 
     async def _handle_learn(call: ServiceCall) -> None:
-        await _gateways()[0].async_learn(call.data["edisio_id"],
-                                         call.data.get("emitter_mid", "04"))
+        await _connected_gateway().async_learn(
+            call.data["edisio_id"].upper(), call.data["emitter_mid"].upper())
 
     async def _handle_send_raw(call: ServiceCall) -> None:
         # Trame simple, ou plusieurs trames séparées par « && » (comme les
         # templates du catalogue) émises dans l'ordre, timing Edisio.
-        frames = [f for f in call.data["frame"].split("&&") if f]
-        await _gateways()[0].async_send(frames)
+        frames = [f.strip() for f in call.data["frame"].split("&&") if f.strip()]
+        if not frames:
+            raise ServiceValidationError(
+                translation_domain=DOMAIN, translation_key="invalid_frame",
+                translation_placeholders={"frame": call.data["frame"]})
+        gateway = _connected_gateway()
+        if gateway.dongle != DONGLE_RFPLAYER:
+            # Dongle Edisio : trames brutes hexadecimales (RFPlayer : texte ZIA).
+            for frame in frames:
+                try:
+                    valid = protocol.is_valid(bytes.fromhex(frame))
+                except ValueError:
+                    valid = False
+                if not valid:
+                    raise ServiceValidationError(
+                        translation_domain=DOMAIN, translation_key="invalid_frame",
+                        translation_placeholders={"frame": frame})
+        await gateway.async_send(frames)
 
     async def _handle_import(call: ServiceCall) -> None:
         path = call.data["path"]
-        raw = await hass.async_add_executor_job(_read_text, path)
+        try:
+            raw = await hass.async_add_executor_job(_read_text, path)
+        except OSError as err:
+            raise ServiceValidationError(
+                translation_domain=DOMAIN, translation_key="import_unreadable",
+                translation_placeholders={"path": path, "error": str(err)},
+            ) from err
         try:
             data = jeedom_import.load_import(json.loads(raw))
         except (json.JSONDecodeError, jeedom_import.ImportError_) as err:
-            _LOGGER.error("Import Edisio : fichier invalide (%s)", err)
-            return
+            raise ServiceValidationError(
+                translation_domain=DOMAIN, translation_key="import_invalid",
+                translation_placeholders={"error": str(err)},
+            ) from err
         entries = hass.config_entries.async_entries(DOMAIN)
         if not entries:
-            _LOGGER.error("Import Jeedom : aucune entree Edisio configuree")
-            return
+            raise ServiceValidationError(
+                translation_domain=DOMAIN, translation_key="no_gateway")
         entry = entries[0]
         devices = list(entry.options.get(CONF_DEVICES, []))
         keys = {(d["edisio_id"], d.get("channel", 1)) for d in devices}
@@ -216,8 +255,11 @@ def _register_services(hass: HomeAssistant) -> None:
     hass.services.async_register(
         DOMAIN, SERVICE_LEARN, _handle_learn,
         schema=vol.Schema({
-            vol.Required("edisio_id"): cv.string,
-            vol.Optional("emitter_mid", default="04"): cv.string,
+            # ID d'emetteur Edisio : 4 octets en hexadecimal ; MID : 1 octet.
+            vol.Required("edisio_id"): vol.All(
+                cv.string, vol.Match(r"^[0-9A-Fa-f]{8}$")),
+            vol.Optional("emitter_mid", default="04"): vol.All(
+                cv.string, vol.Match(r"^[0-9A-Fa-f]{2}$")),
         }),
     )
     hass.services.async_register(
