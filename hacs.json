@@ -1,6 +1,4 @@
 {
-  "name": "Edisio",
-  "content_in_root": false,
-  "render_readme": true,
+  "name": "Edisio Connect",
   "homeassistant": "2026.3.0"
 }

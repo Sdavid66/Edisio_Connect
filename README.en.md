@@ -1,13 +1,17 @@
-# Edisio for Home Assistant
+<img src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/custom_components/edisio/brand/icon.png" alt="Edisio Connect" width="96" align="right">
 
-[🇫🇷 Français](https://github.com/Sdavid66/Edisio_to_HACS/blob/main/README.md) · **🇬🇧 English**
+# Edisio Connect for Home Assistant
+
+[🇫🇷 Français](https://github.com/Sdavid66/Edisio_Connect/blob/main/README.md) · **🇬🇧 English**
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
-[![release](https://img.shields.io/github/v/release/Sdavid66/Edisio_to_HACS)](https://github.com/Sdavid66/Edisio_to_HACS/releases)
+[![release](https://img.shields.io/github/v/release/Sdavid66/Edisio_Connect)](https://github.com/Sdavid66/Edisio_Connect/releases)
 [![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-support%20the%20project-orange?logo=buy-me-a-coffee&logoColor=white)](https://buymeacoffee.com/sdavid66)
 
 > **Custom** Home Assistant integration for **Edisio** home automation (868 MHz USB
 > dongle), ported from the Jeedom plugin. 100% local, no cloud.
+>
+> Independent community project, not affiliated with the Edisio brand or GCE Electronics.
 
 > ☕ Do you find this project useful? You can **[buy me a coffee](https://buymeacoffee.com/sdavid66)**
 > to support its development — thanks!
@@ -16,12 +20,16 @@
 
 1. Make sure [HACS](https://hacs.xyz) is installed.
 2. In Home Assistant: **HACS → ⋮ menu (top right) → Custom repositories**.
-3. Paste the GitHub repository URL `https://github.com/Sdavid66/Edisio_to_HACS`,
+3. Paste the GitHub repository URL `https://github.com/Sdavid66/Edisio_Connect`,
    choose the **Integration** category, then **Add**.
-4. Open the **Edisio** card that appears → **Download**.
+4. Open the **Edisio Connect** card that appears → **Download**.
 5. **Restart Home Assistant**.
-6. **Settings → Devices & services → Add integration → Edisio**, then choose the
+6. **Settings → Devices & services → Add integration → Edisio Connect**, then choose the
    **dongle type** and its **serial port**.
+
+> ℹ️ On startup, Home Assistant logs *"We found a custom integration edisio which has
+> not been tested by Home Assistant"*. This is **normal**: it is shown for every custom
+> integration.
 
 ### Manual installation (without HACS)
 Copy the `custom_components/edisio` folder into Home Assistant's
@@ -35,7 +43,7 @@ dependency.
 > validated bit-for-bit against the original templates (see `tests/test_protocol.py`).
 
 ## Hardware
-<img align="right" width="190" src="images/edisio-clef-usb-a-edisio-868mhz.jpg" alt="Edisio USB dongle 868 MHz">
+<img align="right" width="190" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/edisio-clef-usb-a-edisio-868mhz.jpg" alt="Edisio USB dongle 868 MHz">
 
 - **Edisio USB dongle** (Prolific PL2303 `067B:2303` or FTDI FT232 `0403:6001`), 9600 baud.
 - **GCE RFPlayer (RFP1000)** — 433/868 MHz radio gateway, in **test/beta** (see below).
@@ -43,7 +51,7 @@ dependency.
   EMV-400 shutter…).
 
 ## Dongle / gateway: Edisio or GCE RFPlayer
-<img align="right" width="150" src="images/rfplayer.jpg" alt="GCE RFPlayer RFP1000 gateway">
+<img align="right" width="150" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/rfplayer.jpg" alt="GCE RFPlayer RFP1000 gateway">
 
 When adding the integration (and via **Reconfigure**), choose the **dongle type**:
 
@@ -69,7 +77,7 @@ When adding the integration (and via **Reconfigure**), choose the **dongle type*
 ## How it works
 
 ### SMILE / Diamond remotes (1 to 5 buttons)
-<img align="right" width="230" src="images/diamond.jpg" alt="Edisio Diamond glass switches (multi-colour)">
+<img align="right" width="230" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/diamond.jpg" alt="Edisio Diamond glass switches (multi-colour)">
 
 **Add device → Detect a remote** → choose the type: **SMILE** (1 button) or
 **Diamond** (1 to 5 buttons). Name the remote, then learn its buttons **one by one**
@@ -146,13 +154,13 @@ Passive sensors (e.g. ETS-200) send data, not learning frames → they don't int
 ## Supported receiver models (exact catalog frames)
 
 <p align="center">
-  <img width="240" src="images/emv-400.jpg" alt="EMV-400 micro-module">
+  <img width="240" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/emv-400.jpg" alt="EMV-400 micro-module">
   &nbsp;
-  <img width="240" src="images/emsd-300a.jpg" alt="EMSD-300A micro-module">
+  <img width="240" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/emsd-300a.jpg" alt="EMSD-300A micro-module">
   <br>
-  <img width="240" src="images/edr-b4.jpg" alt="EDR-B4 DIN rail module">
+  <img width="240" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/edr-b4.jpg" alt="EDR-B4 DIN rail module">
   &nbsp;
-  <img width="240" src="images/edr-d4.jpg" alt="EDR-D4 DIN rail module">
+  <img width="240" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/edr-d4.jpg" alt="EDR-D4 DIN rail module">
 </p>
 
 Each model below is defined with its **original frames** (verified against the Jeedom

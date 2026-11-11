@@ -1,13 +1,17 @@
-# Edisio pour Home Assistant
+<img src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/custom_components/edisio/brand/icon.png" alt="Edisio Connect" width="96" align="right">
 
-**🇫🇷 Français** · [🇬🇧 English](https://github.com/Sdavid66/Edisio_to_HACS/blob/main/README.en.md)
+# Edisio Connect pour Home Assistant
+
+**🇫🇷 Français** · [🇬🇧 English](https://github.com/Sdavid66/Edisio_Connect/blob/main/README.en.md)
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
-[![release](https://img.shields.io/github/v/release/Sdavid66/Edisio_to_HACS)](https://github.com/Sdavid66/Edisio_to_HACS/releases)
+[![release](https://img.shields.io/github/v/release/Sdavid66/Edisio_Connect)](https://github.com/Sdavid66/Edisio_Connect/releases)
 [![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-soutenir%20le%20projet-orange?logo=buy-me-a-coffee&logoColor=white)](https://buymeacoffee.com/sdavid66)
 
 > Intégration **custom** Home Assistant pour la domotique **Edisio** (dongle USB 868 MHz),
 > 100 % locale, sans cloud. Vous pouvez également transférer vos anciennes intégrations Jeedom.
+>
+> Projet indépendant et communautaire, sans lien avec la marque Edisio ni avec GCE Electronics.
 
 > ☕ Ce projet vous est utile ? Vous pouvez **[m'offrir un café](https://buymeacoffee.com/sdavid66)**
 > pour soutenir son développement — merci !
@@ -16,12 +20,16 @@
 
 1. Assurez-vous que [HACS](https://hacs.xyz) est installé.
 2. Dans Home Assistant : **HACS → menu ⋮ (en haut à droite) → Dépôts personnalisés**.
-3. Collez l'URL du dépôt GitHub `https://github.com/Sdavid66/Edisio_to_HACS`,
+3. Collez l'URL du dépôt GitHub `https://github.com/Sdavid66/Edisio_Connect`,
    choisissez la catégorie **Integration**, puis **Ajouter**.
-4. Ouvrez la fiche **Edisio** qui apparaît → **Télécharger**.
+4. Ouvrez la fiche **Edisio Connect** qui apparaît → **Télécharger**.
 5. **Redémarrez Home Assistant**.
-6. **Paramètres → Appareils et services → Ajouter une intégration → Edisio**,
+6. **Paramètres → Appareils et services → Ajouter une intégration → Edisio Connect**,
    puis choisissez le **type de dongle** et son **port série**.
+
+> ℹ️ Au démarrage, Home Assistant journalise *« We found a custom integration edisio which
+> has not been tested by Home Assistant »*. Ce message est **normal** : il apparaît pour
+> toute intégration personnalisée.
 
 ### Installation manuelle (sans HACS)
 Copiez le dossier `custom_components/edisio` dans le `config/custom_components/`
@@ -36,7 +44,7 @@ aucune dépendance cloud.
 > a été validé bit à bit contre les templates d'origine (voir `tests/test_protocol.py`).
 
 ## Matériel
-<img align="right" width="190" src="images/edisio-clef-usb-a-edisio-868mhz.jpg" alt="Dongle USB Edisio 868 MHz">
+<img align="right" width="190" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/edisio-clef-usb-a-edisio-868mhz.jpg" alt="Dongle USB Edisio 868 MHz">
 
 - **Dongle USB Edisio** (Prolific PL2303 `067B:2303` ou FTDI FT232 `0403:6001`), 9600 bauds.
 - **GCE RFPlayer (RFP1000)** — passerelle radio 433/868 MHz, en **version de test** (voir plus bas).
@@ -44,7 +52,7 @@ aucune dépendance cloud.
   (micro-modules, rail DIN, volet EMV-400…).
 
 ## Dongle / passerelle : Edisio ou GCE RFPlayer
-<img align="right" width="150" src="images/rfplayer.jpg" alt="Passerelle GCE RFPlayer RFP1000">
+<img align="right" width="150" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/rfplayer.jpg" alt="Passerelle GCE RFPlayer RFP1000">
 
 À l'ajout de l'intégration (et via **Reconfigurer**), choisissez le **type de dongle** :
 
@@ -72,7 +80,7 @@ aucune dépendance cloud.
 ## Fonctionnement
 
 ### Télécommandes SMILE / Diamond (1 à 5 boutons)
-<img align="right" width="230" src="images/diamond.jpg" alt="Interrupteurs Edisio Diamond (verre, multi-couleurs)">
+<img align="right" width="230" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/diamond.jpg" alt="Interrupteurs Edisio Diamond (verre, multi-couleurs)">
 
 **Ajouter un appareil → Détecter une télécommande** → choisissez le type :
 **SMILE** (1 touche) ou **Diamond** (1 à 5 touches). Nommez la télécommande, puis
@@ -153,13 +161,13 @@ d'apprentissage → elles n'interfèrent pas.
 ## Modèles de récepteurs pris en charge (trames exactes du catalogue)
 
 <p align="center">
-  <img width="240" src="images/emv-400.jpg" alt="Micro-module EMV-400">
+  <img width="240" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/emv-400.jpg" alt="Micro-module EMV-400">
   &nbsp;
-  <img width="240" src="images/emsd-300a.jpg" alt="Micro-module EMSD-300A">
+  <img width="240" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/emsd-300a.jpg" alt="Micro-module EMSD-300A">
   <br>
-  <img width="240" src="images/edr-b4.jpg" alt="Module rail DIN EDR-B4">
+  <img width="240" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/edr-b4.jpg" alt="Module rail DIN EDR-B4">
   &nbsp;
-  <img width="240" src="images/edr-d4.jpg" alt="Module rail DIN EDR-D4">
+  <img width="240" src="https://raw.githubusercontent.com/Sdavid66/Edisio_Connect/main/images/edr-d4.jpg" alt="Module rail DIN EDR-D4">
 </p>
 
 Chaque modèle ci-dessous est défini avec ses **trames d'origine** (vérifiées contre
