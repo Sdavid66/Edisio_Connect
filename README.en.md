@@ -16,24 +16,31 @@
 > ☕ Do you find this project useful? You can **[buy me a coffee](https://buymeacoffee.com/sdavid66)**
 > to support its development — thanks!
 
-## Installation via HACS (recommended)
+## Installation
 
-1. Make sure [HACS](https://hacs.xyz) is installed.
-2. In Home Assistant: **HACS → ⋮ menu (top right) → Custom repositories**.
-3. Paste the GitHub repository URL `https://github.com/Sdavid66/Edisio_Connect`,
-   choose the **Integration** category, then **Add**.
-4. Open the **Edisio Connect** card that appears → **Download**.
-5. **Restart Home Assistant**.
-6. **Settings → Devices & services → Add integration → Edisio Connect**, then choose the
-   **dongle type** and its **serial port**.
+### Through HACS
 
-> ℹ️ On startup, Home Assistant logs *"We found a custom integration edisio which has
-> not been tested by Home Assistant"*. This is **normal**: it is shown for every custom
-> integration.
+[![Open your Home Assistant instance and open this repository inside HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Sdavid66&repository=Edisio_Connect&category=integration)
 
-### Manual installation (without HACS)
-Copy the `custom_components/edisio` folder into Home Assistant's
-`config/custom_components/`, then restart.
+1. In HACS, search for **Edisio Connect**.
+2. Download it, then restart Home Assistant.
+
+If it does not show up in the search, add it as a custom repository:
+
+1. HACS → menu ⋮ → **Custom repositories**.
+2. Add `https://github.com/Sdavid66/Edisio_Connect`, category
+   *Integration*.
+3. Install **Edisio Connect**, then restart Home Assistant.
+
+### Manually
+
+Copy `custom_components/edisio` into the `custom_components` folder of
+your Home Assistant configuration, then restart.
+
+### Setup
+
+**Settings → Devices & services → Add integration → Edisio Connect**, then choose
+the **dongle type** and its **serial port**.
 
 A **custom component** bringing the Edisio protocol (868 MHz USB dongle) from the
 Jeedom plugin to Home Assistant. 100% local communication (`local_push`), no cloud

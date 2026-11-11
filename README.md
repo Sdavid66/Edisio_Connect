@@ -16,24 +16,31 @@
 > ☕ Ce projet vous est utile ? Vous pouvez **[m'offrir un café](https://buymeacoffee.com/sdavid66)**
 > pour soutenir son développement — merci !
 
-## Installation via HACS (recommandé)
+## Installation
 
-1. Assurez-vous que [HACS](https://hacs.xyz) est installé.
-2. Dans Home Assistant : **HACS → menu ⋮ (en haut à droite) → Dépôts personnalisés**.
-3. Collez l'URL du dépôt GitHub `https://github.com/Sdavid66/Edisio_Connect`,
-   choisissez la catégorie **Integration**, puis **Ajouter**.
-4. Ouvrez la fiche **Edisio Connect** qui apparaît → **Télécharger**.
-5. **Redémarrez Home Assistant**.
-6. **Paramètres → Appareils et services → Ajouter une intégration → Edisio Connect**,
-   puis choisissez le **type de dongle** et son **port série**.
+### Via HACS
 
-> ℹ️ Au démarrage, Home Assistant journalise *« We found a custom integration edisio which
-> has not been tested by Home Assistant »*. Ce message est **normal** : il apparaît pour
-> toute intégration personnalisée.
+[![Ouvrir ce dépôt dans HACS sur votre instance Home Assistant.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Sdavid66&repository=Edisio_Connect&category=integration)
 
-### Installation manuelle (sans HACS)
-Copiez le dossier `custom_components/edisio` dans le `config/custom_components/`
-de Home Assistant, puis redémarrez.
+1. Dans HACS, cherchez **Edisio Connect**.
+2. Téléchargez-le, puis redémarrez Home Assistant.
+
+S'il n'apparaît pas dans la recherche, ajoutez-le comme dépôt personnalisé :
+
+1. HACS → menu ⋮ → **Dépôts personnalisés**.
+2. Ajoutez `https://github.com/Sdavid66/Edisio_Connect`, catégorie
+   *Integration*.
+3. Installez **Edisio Connect**, puis redémarrez Home Assistant.
+
+### Manuelle
+
+Copiez `custom_components/edisio` dans le dossier `custom_components` de
+votre configuration Home Assistant, puis redémarrez.
+
+### Mise en service
+
+**Paramètres → Appareils et services → Ajouter une intégration → Edisio Connect**,
+puis choisissez le **type de dongle** et son **port série**.
 
 
 Intégration **custom component** portant le protocole Edisio (dongle USB 868 MHz)
