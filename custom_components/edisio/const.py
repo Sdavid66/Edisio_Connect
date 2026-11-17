@@ -69,7 +69,6 @@ SIGNAL_REMOVED = f"{DOMAIN}_removed"       # emetteur supprime (purge des caches
 # Services
 SERVICE_LEARN = "learn"
 SERVICE_SEND_RAW = "send_raw"
-SERVICE_IMPORT = "import_jeedom"
 
 # Delais d'emission (porte du demon Jeedom : 3 envois espaces de 140 ms)
 TX_REPEAT = 3

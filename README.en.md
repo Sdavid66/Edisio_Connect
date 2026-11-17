@@ -224,9 +224,6 @@ If you came from the **Edisio plugin for Jeedom**, you can re-import your device
 - **Settings → Devices & services → Edisio → Configure → *Import from Jeedom***:
   **upload `edisio_import.json` directly from your computer** (ideal if HA runs on a
   remote machine: Proxmox, NAS…), then confirm the summary.
-- *Alternative*: if the file is already on the HA server (e.g. `/config` via the
-  *Samba* / *File editor* add-on), give its path instead. The `edisio.import_jeedom`
-  service (path-based) is also available.
 
 The import rebuilds **one device per Edisio group actually used**, reusing the
 **business name** of your Jeedom commands (`ON_Garage`/`OFF_Garage` → "Garage"), and
@@ -268,6 +265,10 @@ The accepted/banned state is kept in a dedicated *store* (outside configuration)
 discovery never triggers a reload of the integration.
 
 ## Services
+
+These services are **restricted to administrators** (non-admin accounts are
+refused). Automations and scripts can use them as usual.
+
 - `edisio.inclusion_mode`: opens/closes the inclusion window.
 - `edisio.exclude`: removes (and optionally bans) a discovered emitter.
 - `edisio.learn`: sends a learning frame (`edisio_id`, `emitter_mid`).

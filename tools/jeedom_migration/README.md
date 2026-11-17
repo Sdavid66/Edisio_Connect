@@ -68,9 +68,6 @@ Format du fichier :
 2. **Téléversez `edisio_import.json` depuis votre ordinateur** (sélecteur de
    fichier du navigateur — pratique si HA est distant : Proxmox, NAS…), puis
    validez le récapitulatif.
-   - *Alternative* : si le fichier est déjà sur le serveur HA (ex. `/config`),
-     renseignez le champ chemin à la place. Le service `edisio.import_jeedom`
-     (champ `path`) reste aussi disponible.
 
 L'intégration se recharge : les lumières/volets apparaissent comme entités
 pilotables, les télécommandes/sondes comme appareils découverts. **L'import est
