@@ -52,13 +52,6 @@ def _edrb4_fields(defaults: dict | None = None) -> dict:
     return fields
 
 CONF_FILE = "file"
-CONF_PATH = "path"
-
-
-def _read_text(path: str) -> str:
-    """Lecture synchrone d'un fichier texte (appelee dans un executor)."""
-    with open(path, encoding="utf-8", errors="replace") as fh:
-        return fh.read()
 
 
 def _read_uploaded(hass: HomeAssistant, file_id: str) -> str:
@@ -461,22 +454,17 @@ class EdisioOptionsFlow(OptionsFlow):
 
     # ------------------------------------------------------------- import Jeedom
     async def async_step_import_jeedom(self, user_input=None):
-        """Etape 1 : televerser le fichier d'import (ou indiquer un chemin)."""
+        """Etape 1 : televerser le fichier d'import depuis le navigateur.
+
+        Seul le televersement est accepte : aucun fichier n'est lu par chemin
+        sur le serveur Home Assistant.
+        """
         errors: dict[str, str] = {}
         if user_input is not None:
-            file_id = user_input.get(CONF_FILE)
-            path = (user_input.get(CONF_PATH) or "").strip()
             raw: str | None = None
             try:
-                if file_id:  # fichier televerse depuis le navigateur (priorite)
-                    raw = await self.hass.async_add_executor_job(
-                        _read_uploaded, self.hass, file_id)
-                elif path:   # chemin sur le serveur HA (alternative)
-                    raw = await self.hass.async_add_executor_job(_read_text, path)
-                else:
-                    errors["base"] = "no_input"
-            except FileNotFoundError:
-                errors["base"] = "file_not_found"
+                raw = await self.hass.async_add_executor_job(
+                    _read_uploaded, self.hass, user_input[CONF_FILE])
             except (OSError, ValueError):
                 errors["base"] = "read_error"
             if raw is not None and not errors:
@@ -492,10 +480,9 @@ class EdisioOptionsFlow(OptionsFlow):
         return self.async_show_form(
             step_id="import_jeedom",
             data_schema=vol.Schema({
-                vol.Optional(CONF_FILE): FileSelector(
+                vol.Required(CONF_FILE): FileSelector(
                     FileSelectorConfig(accept=".json,application/json")
                 ),
-                vol.Optional(CONF_PATH): str,
             }),
             errors=errors,
         )

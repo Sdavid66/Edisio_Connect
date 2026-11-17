@@ -58,10 +58,9 @@
       },
       "import_jeedom": {
         "title": "Importer depuis Jeedom",
-        "description": "Téléversez le fichier `edisio_import.json` produit en amont par l'outil `edisio_migrate.py` (sélection directe depuis votre ordinateur). Ou, si le fichier est déjà sur le serveur Home Assistant, indiquez plutôt son chemin.",
+        "description": "Téléversez le fichier `edisio_import.json` produit en amont par l'outil `edisio_migrate.py`, directement depuis votre ordinateur.",
         "data": {
-          "file": "Fichier d'import (.json)",
-          "path": "…ou chemin sur le serveur HA"
+          "file": "Fichier d'import (.json)"
         }
       },
       "import_confirm": {
@@ -76,11 +75,9 @@
       }
     },
     "error": {
-      "file_not_found": "Fichier introuvable à ce chemin.",
       "read_error": "Lecture du fichier impossible (droits ou chemin).",
       "invalid_format": "Fichier d'import invalide (JSON attendu, produit par l'outil edisio_migrate.py).",
-      "nothing_found": "Aucun équipement Edisio dans ce fichier d'import.",
-      "no_input": "Téléversez un fichier ou indiquez un chemin."
+      "nothing_found": "Aucun équipement Edisio dans ce fichier d'import."
     }
   },
   "config_subentries": {
@@ -187,12 +184,6 @@
     },
     "invalid_frame": {
       "message": "Trame invalide : {frame}"
-    },
-    "import_unreadable": {
-      "message": "Impossible de lire le fichier d'import {path} : {error}"
-    },
-    "import_invalid": {
-      "message": "Fichier d'import invalide : {error}"
     }
   }
 }

@@ -234,9 +234,6 @@ Si vous veniez du **plugin Edisio de Jeedom**, vous pouvez réimporter vos
   Jeedom*** : **téléversez `edisio_import.json` directement depuis votre
   ordinateur** (idéal si HA tourne sur une machine distante : Proxmox, NAS…),
   puis validez le récapitulatif.
-- *Alternative* : si le fichier est déjà sur le serveur HA (ex. `/config` via
-  l'add-on *Samba* / *File editor*), indiquez plutôt son chemin. Le service
-  `edisio.import_jeedom` (basé sur un chemin serveur) reste aussi disponible.
 
 L'import reconstruit **un appareil par groupe Edisio réellement utilisé**, en
 reprenant le **nom métier** de vos commandes Jeedom (`ON_Garage`/`OFF_Garage`
@@ -281,6 +278,10 @@ L'état accepté/banni est conservé dans un *store* dédié (hors configuration
 la découverte ne provoque jamais de rechargement de l'intégration.
 
 ## Services
+
+Ces services sont **réservés aux administrateurs** (un compte non administrateur
+est refusé). Les automatisations et les scripts peuvent les utiliser normalement.
+
 - `edisio.inclusion_mode` : ouvre/ferme la fenêtre d'inclusion.
 - `edisio.exclude` : retire (et bannit en option) un émetteur découvert.
 - `edisio.learn` : envoie une trame d'apprentissage (`edisio_id`, `emitter_mid`).
