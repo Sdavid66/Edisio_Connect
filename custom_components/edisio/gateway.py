@@ -141,9 +141,8 @@ class _EdisioProtocol(asyncio.Protocol):
             self._on_frame(frame)
 
     def connection_lost(self, exc):
-        _LOGGER.warning("Connexion serie Edisio perdue : %s", exc)
         self.transport = None
-        self._on_lost()
+        self._on_lost(exc)
 
 
 class _RFPlayerProtocol(asyncio.Protocol):
@@ -171,9 +170,8 @@ class _RFPlayerProtocol(asyncio.Protocol):
             self._buf = self._buf[-256:]
 
     def connection_lost(self, exc):
-        _LOGGER.warning("Connexion serie RFPlayer perdue : %s", exc)
         self.transport = None
-        self._on_lost()
+        self._on_lost(exc)
 
 
 class EdisioGateway:
@@ -326,7 +324,14 @@ class EdisioGateway:
         self._dispatch(decoded)
 
     @callback
-    def _handle_lost(self):
+    def _handle_lost(self, exc: Exception | None = None):
+        name = "RFPlayer" if self.dongle == DONGLE_RFPLAYER else "Edisio"
+        if self._closing:
+            # Fermeture voulue (arret ou rechargement de l'integration) : rien
+            # d'anormal, donc pas d'avertissement dans le journal.
+            _LOGGER.debug("Connexion serie %s fermee", name)
+        else:
+            _LOGGER.warning("Connexion serie %s perdue : %s", name, exc)
         self._transport = None
         self.connected = False
         self._notify_status()
